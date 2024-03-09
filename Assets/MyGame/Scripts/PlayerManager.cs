@@ -24,16 +24,21 @@ public class PlayerManager : MonoBehaviour
     {
         return _coin;
     }
-        private void OnCollisionEnter(Collision collision)
+    private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.name=="Damager") {
-             currentHealth -= 20;
-             Destroy(collision.gameObject);
+       
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Damager"))
+        {
+            currentHealth -= 80;
+            Destroy(other.gameObject);
         }
-        if (collision.gameObject.name == "Coin")
+        if (other.gameObject.name == "Coin")
         {
             _coin += 1;
-            Destroy(collision.gameObject);
+            Destroy(other.gameObject);
         }
     }
 }

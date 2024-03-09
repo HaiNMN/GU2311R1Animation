@@ -18,5 +18,6 @@ public class UISceneManager : MonoBehaviour
     void UpdateScene()
     {
         SceneManager.LoadScene(level);
+        AudioManager.Instance.SoundEffectMusic();
     }
 }
