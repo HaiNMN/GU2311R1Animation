@@ -8,28 +8,23 @@ public class UIManager : MonoBehaviour
     // Start is called before the first frame update
     [SerializeField] TextMeshProUGUI  _textHealth;
     [SerializeField] TextMeshProUGUI _textCoin;
-    private PlayerManager _playerManager;
+ 
     void Start()
     {
-        _playerManager = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerManager>();
-        StartCoroutine("UpdateUI");
+        EventManagerGame.onHealth.AddListener(UpdateHealth);
+        EventManagerGame.onSumCoin.AddListener(UpdateCoin);
     }
-
-    // Update is called once per frame
-    void Update()
+    void UpdateHealth(int health)
     {
-        
+        _textHealth.text = ("Health :" + health.ToString());
     }
-    IEnumerator UpdateUI()
+    void UpdateCoin(int coin)
     {
-        while (true)
-        {
-            if (_playerManager != null)
-            {
-                _textHealth.text = ("Health :" + _playerManager.UpdateHealth().ToString());
-                _textCoin.text = ("Coin :" + _playerManager.UpdateCoin().ToString());
-            }
-            yield return new WaitForSeconds(0.2f);
-        }
+        _textCoin.text = ("Coin :" + coin.ToString());
+    }
+    private void OnDisable()
+    {
+        EventManagerGame.onHealth.RemoveListener(UpdateHealth);
+        EventManagerGame.onSumCoin.RemoveListener(UpdateCoin);
     }
 }
